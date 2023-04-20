@@ -3,6 +3,10 @@ import Timer from "../components/Timer";
 import { userContext } from "../context/userContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import { signOutService } from "../services/firebase";
+import config from "../../data";
+
+const workTime = config.workTime || "25:00";
+const breakTime = config.breakTime || "05:00";
 
 function TimerPage() {
   const { dispatch, user } = useContext(userContext);
@@ -50,7 +54,7 @@ function TimerPage() {
       <div className="flex h-screen flex-col justify-center items-center space-y-4">
         <div className="flex flex-col space-y-2 rounded-lg bg-gray-200 p-2">
           <h1 className="font-bold">Work Timer</h1>
-          <Timer onComplete={handleWorkTimerOnComplete} timeValue="00:02" />
+          <Timer onComplete={handleWorkTimerOnComplete} timeValue={workTime} />
         </div>
         {showBreakTimer && (
           <div className="flex flex-col relative space-y-2 rounded-lg bg-gray-200 p-2">
@@ -61,7 +65,10 @@ function TimerPage() {
             >
               close
             </button>
-            <Timer onComplete={handleBreakTimerOnComplete} timeValue="00:10" />
+            <Timer
+              onComplete={handleBreakTimerOnComplete}
+              timeValue={breakTime}
+            />
           </div>
         )}
       </div>
